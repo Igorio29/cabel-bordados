@@ -314,21 +314,75 @@ canvas {
 /* =========================
    LOGIN
 ========================= */
+/* =========================
+   LOGIN (BOOTSTRAP + CUSTOM)
+========================= */
 .login-page {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    min-height: 100vh;
     background: linear-gradient(135deg, #634935, #584131, #a07659);
 }
 
+/* CENTRALIZA COM BOOTSTRAP */
+.login-wrapper {
+    min-height: 100vh;
+}
+
+/* CARD LOGIN */
 .login-box {
     background: white;
-    padding: 40px;
-    width: 340px;
+    padding: 35px;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* LOGO */
+.login-box .logo {
+    width: 120px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 8px;
     border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    text-align: center;
+}
+
+/* TITULO */
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #4a3728;
+    font-weight: bold;
+}
+
+/* INPUTS */
+.login-box .form-control {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+.login-box .form-control:focus {
+    border-color: #6b4f3b;
+    box-shadow: 0 0 0 0.2rem rgba(107, 79, 59, 0.25);
+}
+
+/* BOTÃO */
+.login-box .btn-login {
+    background: #6b4f3b;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.login-box .btn-login:hover {
+    background: #4a3728;
+}
+
+/* MENSAGEM */
+#mensagem {
+    margin-top: 10px;
+    font-size: 14px;
 }
 
 /* =========================

@@ -11,15 +11,17 @@
     <!-- Bootstrap -->
     <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="../filesCss/index.css">
+    <link rel="stylesheet" href="../style.css">
 
 </head>
 
 <body>
 
-    <div class="container">
+    <body class="login-page">
 
-        <div class="login-box">
+    <div class="container d-flex justify-content-center align-items-center login-wrapper">
+
+        <div class="login-box text-center">
 
             <img src="../imgs/logo.png" class="logo">
 
@@ -27,11 +29,17 @@
 
             <form id="loginForm">
 
-                <input type="text" id="usuario" placeholder="Usuário" required>
+                <div class="mb-3">
+                    <input type="text" id="usuario" class="form-control" placeholder="Usuário" required>
+                </div>
 
-                <input type="password" id="senha" placeholder="Senha" required>
+                <div class="mb-3">
+                    <input type="password" id="senha" class="form-control" placeholder="Senha" required>
+                </div>
 
-                <button type="submit">Entrar</button>
+                <button type="submit" class="btn btn-login w-100">
+                    Entrar
+                </button>
 
                 <p id="mensagem"></p>
 
