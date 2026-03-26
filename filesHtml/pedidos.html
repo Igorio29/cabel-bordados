@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pedidos - CaBel Bordados</title>
+
+    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+    <div class="header-mobile">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <img src="../imgs/logo2.png" class="logo-header">
+    </div>
+
+    <aside class="col-md-3 col-lg-2 sidebar">
+        <img src="../imgs/logo.png" class="logo">
+
+        <div class="menu">
+            <a href="dashboard.html" class="menu-btn">Dashboard</a>
+            <a href="clientes.html" class="menu-btn">Clientes</a>
+            <a href="pedidos.html" class="menu-btn active">Pedidos</a>
+            <a href="estoque.html" class="menu-btn">Estoque</a>
+            <a href="financeiro.html" class="menu-btn">Financeiro</a>
+            <a href="login.html" class="menu-btn logout">Sair</a>
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar d-flex justify-content-between align-items-center">
+            <h1>Pedidos</h1>
+            <button class="btn btn-brown" data-bs-toggle="modal" data-bs-target="#modalNovo">
+                + Novo Pedido
+            </button>
+        </header>
+<div class="row mb-3">
+
+    <div class="col-md-3">
+        <label>Data Inicial</label>
+        <input type="date" id="filtroInicio" class="form-control">
+    </div>
+
+    <div class="col-md-3">
+        <label>Data Final</label>
+        <input type="date" id="filtroFim" class="form-control">
+    </div>
+
+    <div class="col-md-2 d-flex align-items-end">
+        <button class="btn btn-brown w-100" onclick="filtrarPedidos()">
+            Filtrar
+        </button>
+    </div>
+
+</div>
+        <section class="tabelas">
+
+            <!-- EMPRESAS -->
+            <div class="tabela-box">
+                <h2>Pedidos - Empresas</h2>
+
+                <table class="table">
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Valor</th>
+                        <th>Data</th>
+                        <th>Ação</th>
+                    </tr>
+
+                    <tr>
+                        <td>Loja Exemplo</td>
+                        <td>R$ 500</td>
+                        <td data-data="2026-03-25">25/03/2026</td>
+                        <td>
+                            <button class="btn btn-brown"
+                                onclick="abrirDetalhes('Empresa','Loja Exemplo','500','Bordado camisa','-','-','25/03/2026')">
+                                Ver
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- PESSOAS -->
+            <div class="tabela-box">
+                <h2>Pedidos - Pessoas</h2>
+
+                <table class="table">
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Valor</th>
+                        <th>Data</th>
+                        <th>Ação</th>
+                    </tr>
+
+                    <tr>
+                        <td>Maria Silva</td>
+                        <td>R$ 120</td>
+                        <td data-data="2026-03-25">25/03/2026</td>
+                        <td>
+                            <button class="btn btn-brown"
+                                onclick="abrirDetalhes('Pessoa','Maria Silva','120','Bordado toalha','-','-','25/03/2026')">
+                                Ver
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </section>
+
+        <!-- MODAL NOVO -->
+        <div class="modal fade" id="modalNovo">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5>Novo Pedido</h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <label>Tipo</label>
+                        <select id="nTipo" class="form-control mb-2">
+                            <option value="Empresa">Empresa</option>
+                            <option value="Pessoa">Pessoa</option>
+                        </select>
+
+                        <label>Cliente</label>
+                        <input type="text" id="nCliente" class="form-control mb-2">
+
+                        <label>Valor</label>
+                        <input type="number" id="nValor" class="form-control mb-2">
+
+                        <label>Data</label>
+                        <input type="date" id="nData" class="form-control mb-2">
+
+                        <label>Descrição</label>
+                        <textarea id="nDesc" class="form-control mb-2"></textarea>
+
+                        <label>Emitir Nota Fiscal?</label>
+                        <select id="nNota" class="form-control mb-2">
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
+                        </select>
+
+                        <hr>
+
+                        <h5>Materiais</h5>
+                        <div id="materiais-container"></div>
+
+                        <button class="btn btn-secondary mt-2" onclick="adicionarMaterial()">
+                            + Material
+                        </button>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button class="btn btn-brown" onclick="salvarPedido()">Salvar</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- MODAL DETALHES -->
+        <div class="modal fade" id="modalDetalhes">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5>Detalhes do Pedido</h5>
+                        <button class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p><strong>Tipo:</strong> <span id="dTipo"></span></p>
+                        <p><strong>Cliente:</strong> <span id="dCliente"></span></p>
+                        <p><strong>Valor:</strong> R$ <span id="dValor"></span></p>
+                        <p><strong>Data:</strong> <span id="dData"></span></p>
+                        <p><strong>Descrição:</strong> <span id="dDesc"></span></p>
+                        <p><strong>Nota Fiscal:</strong> <span id="dNota"></span></p>
+                        <p><strong>Materiais:</strong> <span id="dMateriais"></span></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+            document.querySelector('.overlay').classList.toggle('active');
+        }
+
+        function salvarPedido() {
+
+            const tipo = nTipo.value;
+            const cliente = nCliente.value;
+            const valor = nValor.value;
+            const data = nData.value;
+            const desc = nDesc.value;
+            const nota = nNota.value;
+
+            const materiais = [];
+            document.querySelectorAll("#materiais-container .row").forEach(row => {
+                const nome = row.querySelector("select")?.value;
+                const qtd = row.querySelector("input")?.value;
+
+                if (nome && qtd) {
+                    materiais.push(`${nome} (${qtd})`);
+                }
+            });
+
+            const tabela = tipo === "Empresa"
+                ? document.querySelectorAll("table")[0]
+                : document.querySelectorAll("table")[1];
+
+            const dataFormatada = data.split("-").reverse().join("/");
+
+            const novaLinha = tabela.insertRow();
+
+            novaLinha.innerHTML = `
+                <td>${cliente}</td>
+                <td>R$ ${valor}</td>
+                <td data-data="${data}">${dataFormatada}</td>
+                <td>
+                    <button class="btn btn-brown"
+                        onclick="abrirDetalhes('${tipo}','${cliente}','${valor}','${desc}','${nota}','${materiais.join(", ")}','${dataFormatada}')">
+                        Ver
+                    </button>
+                </td>
+            `;
+
+            bootstrap.Modal.getInstance(modalNovo).hide();
+        }
+
+        function abrirDetalhes(tipo, cliente, valor, desc, nota, materiais, data) {
+            dTipo.innerText = tipo;
+            dCliente.innerText = cliente;
+            dValor.innerText = valor;
+            dDesc.innerText = desc;
+            dNota.innerText = nota || "-";
+            dMateriais.innerText = materiais || "-";
+            dData.innerText = data || "-";
+
+            new bootstrap.Modal(modalDetalhes).show();
+        }
+
+        function adicionarMaterial() {
+            const div = document.createElement('div');
+            div.classList.add('row', 'mb-2');
+
+            div.innerHTML = `
+                <div class="col-md-6">
+                    <select class="form-control">
+                        <option>Tecido Algodão Branco</option>
+                        <option>Linha Marrom</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <input type="number" class="form-control" placeholder="Quantidade">
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-danger w-100" onclick="removerMaterial(this)">X</button>
+                </div>
+            `;
+
+            document.getElementById('materiais-container').appendChild(div);
+        }
+
+        function removerMaterial(btn) {
+            btn.closest('.row').remove();
+        }
+
+        function filtrarPedidos() {
+
+    const inicio = document.getElementById("filtroInicio").value;
+    const fim = document.getElementById("filtroFim").value;
+
+    const linhas = document.querySelectorAll("table tr");
+
+    linhas.forEach((linha, index) => {
+
+        // ignora cabeçalho
+        if (index === 0) return;
+
+        const tdData = linha.querySelector("td[data-data]");
+
+        if (!tdData) return;
+
+        const data = tdData.getAttribute("data-data");
+
+        if ((inicio && data < inicio) || (fim && data > fim)) {
+            linha.style.display = "none";
+        } else {
+            linha.style.display = "";
+        }
+
+    });
+}
+    </script>
+
+    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

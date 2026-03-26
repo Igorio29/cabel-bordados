@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clientes - CaBel Bordados</title>
+
+    <!-- Bootstrap -->
+    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+    <div class="header-mobile">
+
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <img src="../imgs/logo2.png" class="logo-header">
+
+    </div>
+
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <!-- SIDEBAR -->
+            <aside class="col-md-3 col-lg-2 sidebar">
+
+                <img src="../imgs/logo.png" class="logo">
+
+                <div class="menu">
+                    <a href="dashboard.html" class="menu-btn">Dashboard</a>
+                    <a href="clientes.html" class="menu-btn active">Clientes</a>
+                    <a href="pedidos.html" class="menu-btn">Pedidos</a>
+                    <a href="estoque.html" class="menu-btn">Estoque</a>
+                    <a href="financeiro.html" class="menu-btn">Financeiro</a>
+                    <a href="login.html" class="menu-btn logout">Sair</a>
+                </div>
+
+            </aside>
+
+            <!-- MAIN -->
+            <main class="col-md-9 col-lg-10 main">
+
+                <!-- TOPO -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1>Clientes</h1>
+                    <button class="btn btn-brown" data-bs-toggle="modal" data-bs-target="#modalCliente">
+                        + Novo Cliente
+                    </button>
+                </div>
+
+                <!-- TABELAS -->
+                <div class="row g-4">
+
+                    <!-- EMPRESAS -->
+                    <div class="col-12 col-lg-6">
+                        <div class="card p-3">
+
+                            <h5 class="mb-3">Empresas (CNPJ)</h5>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Telefone</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="tabelaEmpresas">
+                                        <tr>
+                                            <td>Loja Exemplo</td>
+                                            <td>(46) 99999-1111</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- PESSOAS -->
+                    <div class="col-12 col-lg-6">
+                        <div class="card p-3">
+
+                            <h5 class="mb-3">Pessoas (CPF)</h5>
+
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Telefone</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="tabelaPessoas">
+                                        <tr>
+                                            <td>Maria Silva</td>
+                                            <td>(46) 97777-3333</td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL BOOTSTRAP (AGORA DECENTE) -->
+    <div class="modal fade" id="modalCliente">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo Cliente</h5>
+                    <button class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="">
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label class="form-label">Tipo</label>
+                            <select id="tipo" class="form-select" required>
+                                <option value="cpf">Pessoa Física</option>
+                                <option value="cnpj">Empresa</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nome</label>
+                            <input type="text" id="nome" class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Telefone</label>
+                            <input type="text" id="telefone" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" 
+                            onclick="adicionarCliente()">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY AQUI -->
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            const btn = document.querySelector('.menu-toggle');
+
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            btn.classList.toggle('hidden');
+        }
+        const modal = document.getElementById("modal");
+
+function abrirModal(){
+    modal.style.display = "flex";
+}
+
+function fecharModal(){
+    modal.style.display = "none";
+}
+
+
+function adicionarCliente(){
+
+    let tipo = document.getElementById("tipo").value;
+    let nome = document.getElementById("nome").value;
+    let telefone = document.getElementById("telefone").value;
+
+    if(nome === "" || telefone === ""){
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    let tabela;
+
+    if(tipo === "cpf"){
+        tabela = document.getElementById("tabelaPessoas");
+    }else{
+        tabela = document.getElementById("tabelaEmpresas");
+    }
+
+    let linha = tabela.insertRow();
+
+    let colNome = linha.insertCell(0);
+    let colTel = linha.insertCell(1);
+
+    colNome.innerText = nome;
+    colTel.innerText = telefone;
+
+    fecharModal();
+
+}
+    </script>
+    <script src="../assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

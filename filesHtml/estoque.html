@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clientes - CaBel Bordados</title>
+
+    <!-- Bootstrap -->
+    <link href="../assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/fontawesome-free-7.2.0-web/css/all.css">
+
+
+    <link rel="stylesheet" href="../style.css">
+
+</head>
+
+<body>
+    <div class="header-mobile">
+
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            ☰
+        </button>
+
+        <img src="../imgs/logo2.png" class="logo-header">
+
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside class="col-md-3 col-lg-2 sidebar">
+
+        <img src="../imgs/logo.png" class="logo">
+
+        <div class="menu">
+            <a href="dashboard.html" class="menu-btn">Dashboard</a>
+            <a href="clientes.html" class="menu-btn">Clientes</a>
+            <a href="pedidos.html" class="menu-btn">Pedidos</a>
+            <a href="estoque.html" class="menu-btn active">Estoque</a>
+            <a href="financeiro.html" class="menu-btn">Financeiro</a>
+            <a href="login.html" class="menu-btn logout">Sair</a>
+        </div>
+
+    </aside>
+    <main class="main">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>Estoque de Materiais</h1>
+
+            <button class="btn btn-brown" data-bs-toggle="modal" data-bs-target="#modalMaterial">
+                <i class="fas fa-plus"></i> Novo Material
+            </button>
+        </div>
+
+        <div class="conteudo">
+
+            <div class="table-responsive">
+                <table class="table align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th class="d-none d-md-table-cell">Tipo</th>
+                            <th><i class="fas fa-box"></i> Material</th>
+                            <th>Quantidade</th>
+                            <th>Custo</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr>
+                        <tr>
+                            <td class="tipo d-none d-md-table-cell tipo"> <strong>Tecido</strong></td>
+                            <td class="nome"> Tecido Algodão Branco</td>
+                            <td class="qtd">20 Metros</td>
+                            <td class="custo">R$ 18,00</td>
+
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-primary btn-editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger btn-deletar">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-success d-none btn-salvar">
+                                    <i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-secondary d-none btn-cancelar">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        </tr>
+
+                        <tr>
+                            <td class="d-none d-md-table-cell tipo"> <strong>Linha</strong></td>
+                            <td class="nome">Linha Marrom</td>
+
+                            <td class="qtd">3 Unidades</td>
+                            <td class="custo">R$ 5,00</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-primary btn-editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger btn-deletar">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-success d-none btn-salvar">
+                                    <i class="fa-solid fa-floppy-disk" style="color: #ffffff;"></i>
+                                </button>
+
+                                <button class="btn btn-sm btn-secondary d-none btn-cancelar">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </main>
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.overlay');
+            const btn = document.querySelector('.menu-toggle');
+
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+
+            btn.classList.toggle('hidden');
+        }
+
+        document.querySelectorAll('.btn-editar').forEach(btn => {
+            btn.addEventListener('click', function () {
+
+                const row = this.closest('tr');
+
+                const tipo = row.querySelector('.tipo');
+                const nome = row.querySelector('.nome');
+                const qtd = row.querySelector('.qtd');
+                const custo = row.querySelector('.custo');
+                tipo.innerHTML = `<select class="form-control"> ${tipo.innerText}  <option>Tecido</option> <option>Linha</option> </select>`
+                nome.innerHTML = `<input class="form-control" value="${nome.innerText}">`;
+                qtd.innerHTML = `<input class="form-control" value="${qtd.innerText}">`;
+                custo.innerHTML = `<input class="form-control" value="${custo.innerText}">`;
+
+                // troca botões
+                this.classList.add('d-none');
+                row.querySelector('.btn-deletar').classList.add('d-none')
+                row.querySelector('.btn-salvar').classList.remove('d-none');
+                row.querySelector('.btn-cancelar').classList.remove('d-none');
+            });
+        });
+    </script>
+</body>
+
+</html>
